@@ -1,0 +1,3 @@
+[submodule "static/hugolify-sveltia-cms"]
+	path = static/hugolify-sveltia-cms
+	url = git@github.com:Hugolify/hugolify-sveltia-cms.git
