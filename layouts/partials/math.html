@@ -5,8 +5,19 @@
 {{ end }}
 
 <link rel="stylesheet" href="{{ .Site.Params.KaTeXCDN }}/katex@{{ .Site.Params.KaTeXVersion }}/dist/katex.min.css" crossorigin="anonymous">
-<script defer src="{{ .Site.Params.KaTeXCDN }}/katex@{{ .Site.Params.KaTeXVersion }}/dist/katex.min.js" crossorigin="anonymous"></script>
-<script defer src="{{ .Site.Params.KaTeXCDN }}/katex@{{ .Site.Params.KaTeXVersion }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+{{ $script := resources.Get "katex/katex.js" | resources.Minify }}
+{{ with $script.Content }}
+<script>{{ . | safeJS }}</script>
+{{ end }}
+{{ $script := resources.Get "katex/contrib/auto-render.js" | resources.Minify }}
+{{ with $script.Content }}
+<script>{{ . | safeJS }}</script>
+{{ end }}
+{{ $script := resources.Get "wd.js" | resources.Minify }}
+{{ with $script.Content }}
+<script>{{ . | safeJS }}</script>
+{{ end }}
+
 <!-- do not add onload attributes, breaks settings below -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
