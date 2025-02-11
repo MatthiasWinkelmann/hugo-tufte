@@ -1,16 +1,21 @@
 <head>
-<title>{{ .Title  }} - {{ .Site.Title }}</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description"
+  <title>{{ .Title }} - {{ .Site.Title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
     content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Params.description }}{{end }}{{ end }} ">
-<link rel="canonical" href="{{ .Permalink }}" />
-<!-- favicon -->
-{{ if .Site.Params.favicon }}
-<link rel="icon" href="{{ .Site.Params.favicon | absURL }}" />
-{{ end }}
-{{ if .Site.Params.touchicon }}
-<link rel="apple-touch-icon" href="{{ .Site.Params.touchicon | absURL }}" />
-{{ end }}
+
+  {{ $script := resources.Get "wd.js" | resources.Minify }}
+  {{ with $script.Content }}
+  <script>{ { . | safeJS } }</script>
+  {{ end }}
+
+  <link rel="canonical" href="{{ .Permalink }}" />
+  {{ template "_internal/opengraph.html" . }}
+  {{ if .Site.Params.favicon }}
+  <link rel="icon" href="{{ .Site.Params.favicon | absURL }}" />{{ end }}
+  {{ if .Site.Params.touchicon }}
+  <link rel="apple-touch-icon" href="{{ .Site.Params.touchicon | absURL }}" />{{ end }}
+
   {{ partial "header.includes.html" . }}
 </head>
